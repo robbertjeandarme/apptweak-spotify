@@ -36,6 +36,11 @@ function Searchbar(): ReactElement {
     }
   };
 
+  const clearSearch = () => {
+    setSearchInput("");
+    setTracks([]);
+  };
+
   const handleSearchInputChange = useCallback((e: any) => {
     setSearchInput(e.target.value);
   }, []);
@@ -76,6 +81,16 @@ function Searchbar(): ReactElement {
               />
             ))
             .slice(0, 5)}
+
+          {tracks.length !== 0 && (
+            <Button
+              onClick={clearSearch}
+              className="rounded-pill"
+              variant="outline-success"
+            >
+              Clear
+            </Button>
+          )}
         </Col>
       </Row>
     </Container>

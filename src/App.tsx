@@ -15,8 +15,9 @@ const App: FC = (): ReactElement => {
   return (
     <>
       <Header></Header>
-      <p>hello app comp</p>
       <Searchbar></Searchbar>
+
+      <p>hello world jhfsldfhsdklfjsdlkfjlfjsdlkfjsd</p>
     </>
   );
 };
