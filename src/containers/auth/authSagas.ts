@@ -7,7 +7,6 @@ import { getUser, getUserFailed, getUserSuccess } from "./slice";
 
 function* getUserIdSaga() {
   try {
-    console.log("getUserIdSaga");
     const accessToken: string = yield select(authSelectors.getAccessToken);
 
     const request = () =>
@@ -16,6 +15,8 @@ function* getUserIdSaga() {
       });
     const { data } = yield call(request);
 
+    console.log(`data in authsaga`, { data });
+
     yield put(getUserSuccess({ userId: data.id, userName: data.display_name }));
   } catch (error: any) {
     yield put(getUserFailed({ message: error.message }));
@@ -23,6 +24,5 @@ function* getUserIdSaga() {
 }
 
 export default function* authSaga() {
-  console.log("authSaga");
   yield takeEvery(getUser.type, getUserIdSaga);
 }

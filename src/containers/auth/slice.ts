@@ -11,7 +11,6 @@ const SPOTIFY_SCOPE = [
 ];
 
 const REDIRECT_URI = window.location.origin;
-console.log("REDIRECT_URI", REDIRECT_URI);
 export interface User {
   userId?: string;
   userName?: string;
@@ -44,8 +43,6 @@ const authSlice = createSlice({
     login() {
       const { REACT_APP_SPOTIFY_CLIENT_ID } = process.env;
       const scopes: string = SPOTIFY_SCOPE.join(",");
-
-      console.log("login", REACT_APP_SPOTIFY_CLIENT_ID, scopes);
 
       window.location.href = `https://accounts.spotify.com/me/authorize?client_id=${REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${scopes}`;
     },

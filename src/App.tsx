@@ -1,35 +1,36 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { authSelectors } from "./containers/auth/selectors";
-import logo from "./logo.svg";
+import { Navbar, Container, Button } from "react-bootstrap";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
   const user = useSelector(authSelectors.getUser);
-
   // TODO: You can access user data and now fetch user's playlists
   console.log(user);
 
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Navbar className={isDarkMode ? "bg-dark" : "bg-body-tertiary"}>
+      <Container>
+        <Navbar.Brand href="#home">Brand link</Navbar.Brand>
+        <Button
+          className={isDarkMode ? "btn btn-light" : "btn btn-dark"}
+          onClick={toggleDarkMode}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          {isDarkMode ? "Light Mode" : "Dark Mode"}
+        </Button>
+      </Container>
+    </Navbar>
   );
 };
 
