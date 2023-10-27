@@ -11,7 +11,9 @@ function* getUserIdSaga() {
 
     const request = () =>
       axios.get<any>("https://api.spotify.com/v1/me", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
     const { data } = yield call(request);
 

@@ -4,7 +4,7 @@ import React, { FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "./containers/auth/selectors";
 import Header from "./core/header";
-import Searchbar from "./features/searchbar";
+import Searchbar from "./features/searchbar/searchbar";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
