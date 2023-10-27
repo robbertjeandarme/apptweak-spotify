@@ -7,6 +7,7 @@ import { getUser, getUserFailed, getUserSuccess } from "./slice";
 
 function* getUserIdSaga() {
   try {
+    console.log("getUserIdSaga");
     const accessToken: string = yield select(authSelectors.getAccessToken);
 
     const request = () =>
@@ -22,5 +23,6 @@ function* getUserIdSaga() {
 }
 
 export default function* authSaga() {
+  console.log("authSaga");
   yield takeEvery(getUser.type, getUserIdSaga);
 }
