@@ -2,11 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import { ErrorPayload, RequestStatus } from "../../types/requests";
 
-export interface Playlist {
-  id: string;
-  name: string;
-  description: string;
-}
+import { Playlist } from "../../types/playlist";
 
 export interface PlaylistState {
   playlists: Playlist[];

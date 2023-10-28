@@ -8,7 +8,7 @@ import { getUser } from "../../containers/auth/slice";
 import axios from "axios";
 import SearchbarTrack from "./searchbarTrack";
 import { Track } from "../../types/track";
-import Playlists from "../playlists/playlists";
+import Playlists from "../playlists/playlist";
 
 function Searchbar(): ReactElement {
   const [searchInput, setSearchInput] = useState<string>("");

@@ -25,9 +25,6 @@ function* getPlaylistsSaga() {
     // get data from request
     const { data } = yield call(request);
 
-    console.log(data);
-    //console.log(`data in playlistSaga`, { data });
-
     yield put(getPlaylistsSuccess(data.items));
   } catch (error: any) {
     console.log(`error in playlistSaga`, { error });

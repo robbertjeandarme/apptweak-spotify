@@ -1,3 +1,9 @@
 .fa-beat {
   animation-duration: 1.5s;
 }
+
+.hover:hover {
+  transition: 0.6s;
+  transform: scale(1.05);
+  cursor: pointer;
+}
