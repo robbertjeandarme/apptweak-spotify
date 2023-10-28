@@ -1,22 +1,14 @@
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { RootState } from "../../store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../../containers/auth/slice";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import SearchbarTrack from "./searchbarTrack";
 import { Track } from "../../types/track";
-import Playlists from "../playlists/playlist";
 
 function Searchbar(): ReactElement {
   const [searchInput, setSearchInput] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
-  const [test, setTest] = useState<boolean>(false);
-
-  //store the items
   const [tracks, setTracks] = useState([]);
 
   const accessToken = useSelector(
@@ -46,10 +38,8 @@ function Searchbar(): ReactElement {
   };
 
   const clearSearch = () => {
-    // clear the search
-    setSearchInput("");
     setTracks([]);
-    setTest(true);
+    setSearchInput("");
   };
 
   const handleSearchInputChange = useCallback((e: any) => {
@@ -104,7 +94,6 @@ function Searchbar(): ReactElement {
           )}
         </Col>
       </Row>
-      {test && <Playlists />}
     </Container>
   );
 }

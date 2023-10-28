@@ -7,6 +7,7 @@ import Header from "./core/header";
 import { Container, Row, Col } from "react-bootstrap";
 import Searchbar from "./features/searchbar/searchbar";
 import PlayList from "./features/playlists/playlist";
+import PlaylistTracks from "./features/playlists/playlistTracks";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const App: FC = (): ReactElement => {
             </Col>
             <Col md={8}>
               <Searchbar></Searchbar>
+              <PlaylistTracks></PlaylistTracks>
             </Col>
           </Row>
         </Container>
