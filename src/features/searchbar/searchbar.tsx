@@ -8,10 +8,13 @@ import { getUser } from "../../containers/auth/slice";
 import axios from "axios";
 import SearchbarTrack from "./searchbarTrack";
 import { Track } from "../../types/track";
+import Playlists from "../playlists/playlists";
 
 function Searchbar(): ReactElement {
   const [searchInput, setSearchInput] = useState<string>("");
   const [loading, setLoading] = useState(false);
+
+  const [test, setTest] = useState<boolean>(false);
 
   //store the items
   const [tracks, setTracks] = useState([]);
@@ -24,9 +27,15 @@ function Searchbar(): ReactElement {
     tracks.length = 0; //clear the array
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3001/api/track", {
-        searchInput,
-        accessToken,
+      const response = await axios.get("https://api.spotify.com/v1/search", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          q: searchInput,
+          type: "track",
+          limit: 5,
+        },
       });
       setTracks(response.data.tracks.items);
     } catch (error) {
@@ -37,8 +46,10 @@ function Searchbar(): ReactElement {
   };
 
   const clearSearch = () => {
+    // clear the search
     setSearchInput("");
     setTracks([]);
+    setTest(true);
   };
 
   const handleSearchInputChange = useCallback((e: any) => {
@@ -93,6 +104,7 @@ function Searchbar(): ReactElement {
           )}
         </Col>
       </Row>
+      {test && <Playlists />}
     </Container>
   );
 }

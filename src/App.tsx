@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "./containers/auth/selectors";
 import Header from "./core/header";
 import Searchbar from "./features/searchbar/searchbar";
+import Playlists from "./features/playlists/playlists";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
@@ -16,8 +17,6 @@ const App: FC = (): ReactElement => {
     <>
       <Header></Header>
       <Searchbar></Searchbar>
-
-      <p>hello world jhfsldfhsdklfjsdlkfjlfjsdlkfjsd</p>
     </>
   );
 };
