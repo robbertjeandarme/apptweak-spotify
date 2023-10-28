@@ -57,7 +57,7 @@ function Searchbar(): ReactElement {
   }, []);
 
   return (
-    <Container className="mt-5 ">
+    <Container className="m-4">
       <Row>
         <Col sm={12}>
           <Form className="d-flex">

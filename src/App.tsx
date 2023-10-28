@@ -4,8 +4,9 @@ import React, { FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "./containers/auth/selectors";
 import Header from "./core/header";
+import { Container, Row, Col } from "react-bootstrap";
 import Searchbar from "./features/searchbar/searchbar";
-import Playlists from "./features/playlists/playlistItem";
+import PlayList from "./features/playlists/playlist";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
@@ -15,8 +16,19 @@ const App: FC = (): ReactElement => {
 
   return (
     <>
-      <Header></Header>
-      <Searchbar></Searchbar>
+      <>
+        <Header />
+        <Container fluid>
+          <Row>
+            <Col md={2}>
+              <PlayList></PlayList>
+            </Col>
+            <Col md={8}>
+              <Searchbar></Searchbar>
+            </Col>
+          </Row>
+        </Container>
+      </>
     </>
   );
 };

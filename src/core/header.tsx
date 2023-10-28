@@ -11,7 +11,7 @@ function Header(): ReactElement {
   return (
     <Navbar className={isDarkMode ? "bg-dark" : "bg-body-tertiary"}>
       <Container>
-        <Navbar.Brand href="#home">Brand link</Navbar.Brand>
+        <Navbar.Brand href="#home">Spotify</Navbar.Brand>
         <Button
           className={isDarkMode ? "btn btn-light" : "btn btn-dark"}
           onClick={toggleDarkMode}

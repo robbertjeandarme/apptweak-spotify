@@ -17,7 +17,7 @@ function PlayList(): ReactElement {
 
   return (
     <>
-      <div className="d-flex flex-column bg-body-tertiary rounded-2 w-50 p-2">
+      <div className="d-flex flex-column bg-body-tertiary rounded-2  p-2 m-2">
         <div className="d-flex justify-content-between m-1">
           <h4>Playlists</h4>
           <button className="btn ">
