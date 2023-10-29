@@ -6,21 +6,21 @@ import { Item, PlaylistTrack } from "../../types/playlistTrack";
 import { Track } from "../../types/track";
 import { Card } from "react-bootstrap";
 import { authSelectors } from "../../containers/auth/selectors";
+import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PlaylistTracks(): ReactElement {
   const listOfPlayListTracks = useSelector(playlistSelectors.getPlaylistTracks);
   const accessToken = useSelector(authSelectors.getAccessToken);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     console.log("tracks in the playlist tracks component");
     console.log(listOfPlayListTracks);
   }, [listOfPlayListTracks]);
 
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-
   const handlePlayClick = (url: string) => {
     const urlWithToken = `${url}?access_token=${accessToken}`;
-
     const newAudio = new Audio(urlWithToken);
     newAudio.crossOrigin = "anonymous";
     newAudio.preload = "auto";
@@ -44,6 +44,7 @@ function PlaylistTracks(): ReactElement {
       audio.currentTime = 0;
     }
   };
+
   return (
     <>
       <div className=" d-flex flex-wrap">
@@ -68,11 +69,19 @@ function PlaylistTracks(): ReactElement {
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
-                <small className="text-muted">
-                  <button onClick={() => handlePlayClick(track.preview_url)}>
-                    Play
+                <small className="text-muted d-flex justify-content-around">
+                  <button
+                    className="btn text-success"
+                    onClick={() => handlePlayClick(track.preview_url)}
+                  >
+                    <FontAwesomeIcon icon={faPlay} />
                   </button>
-                  <button onClick={handleStopClick}>Stop</button>
+                  <button
+                    className="btn text-secondary"
+                    onClick={handleStopClick}
+                  >
+                    <FontAwesomeIcon icon={faStop} />
+                  </button>
                 </small>
               </Card.Footer>
             </Card>
