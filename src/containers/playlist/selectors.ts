@@ -21,4 +21,8 @@ export const playlistSelectors = {
     selectSelf,
     (playlist) => playlist.error
   ),
+  selectPlaylist: createSelector(
+    selectSelf,
+    (playlist) => playlist.selectedPlaylist
+  ),
 };

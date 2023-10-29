@@ -5,6 +5,7 @@ import { Track } from "../../types/track";
 import { PlaylistTrack } from "../../types/playlistTrack";
 
 export interface PlaylistState {
+  selectedPlaylist?: Playlist;
   playlists: Playlist[];
   playListTracks: Track[];
   status: RequestStatus;
@@ -12,6 +13,7 @@ export interface PlaylistState {
 }
 
 const initialState: PlaylistState = {
+  selectedPlaylist: undefined,
   playlists: [],
   playListTracks: [],
   status: RequestStatus.IDLE,
@@ -36,6 +38,10 @@ export const getPlaylistTracksSuccess = createAction<Track[]>(
 );
 export const getPlaylistTracksFailed = createAction<ErrorPayload>(
   "playlist/getPlaylistTracksFailed"
+);
+
+export const selectedPlaylist = createAction<Playlist>(
+  "playlist/selectedPlaylist"
 );
 
 const playlistSlice = createSlice({
@@ -65,6 +71,10 @@ const playlistSlice = createSlice({
       .addCase(getPlaylistTracksFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
+      })
+      .addCase(selectedPlaylist, (state, action) => {
+        state.status = RequestStatus.SUCCESS;
+        state.selectedPlaylist = action.payload;
       });
   },
 });

@@ -1,8 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { playlistSelectors } from "../../containers/playlist/selectors";
-import { getPlaylistTracks } from "../../containers/playlist/slice";
-import { Item, PlaylistTrack } from "../../types/playlistTrack";
 import { Track } from "../../types/track";
 import { Card } from "react-bootstrap";
 import { authSelectors } from "../../containers/auth/selectors";
