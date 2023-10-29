@@ -2,7 +2,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactElement, useEffect } from "react";
 import { Track } from "../../types/track";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTrackToPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { toast } from "react-toastify";
@@ -18,9 +18,9 @@ interface SearchbarTrackProps {
 
 function SearchbarTrack(props: SearchbarTrackProps): ReactElement {
   const track = props.track;
-  const selectedPlaylist = playlistSelectors.selectPlaylist;
+  const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
 
-  const notify = () => toast.warn("Pleas select a playlist!");
+  const notify = () => toast.warn("Please select a playlist!");
 
   const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ function SearchbarTrack(props: SearchbarTrackProps): ReactElement {
         <div>
           <p>{track.name}</p>
         </div>
-        {selectedPlaylist === undefined ? (
+        {selectedPlaylist !== undefined ? (
           <button
             className="btn"
             onClick={() => dispatch(addTrackToPlaylist(track))}
