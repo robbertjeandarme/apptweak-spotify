@@ -21,10 +21,10 @@ const App: FC = (): ReactElement => {
         <Header />
         <Container fluid>
           <Row>
-            <Col md={2}>
+            <Col lg={3}>
               <PlayList></PlayList>
             </Col>
-            <Col md={8}>
+            <Col lg={9}>
               <Searchbar></Searchbar>
               <PlaylistTracks></PlaylistTracks>
             </Col>
