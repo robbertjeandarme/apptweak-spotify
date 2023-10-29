@@ -7,6 +7,7 @@ import { addTrackToPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { toast } from "react-toastify";
 
+// TODO: fix bug
 // hier zit een bug in, als je een playlist zou de knop groen worden en een track toevegen
 // weet niet of de selectedPlaatlist undefined is of niet
 // track toevegen werkt waneer er een playlist is geselecteerd
