@@ -17,8 +17,6 @@ function* getUserIdSaga() {
       });
     const { data } = yield call(request);
 
-    console.log(`data in authsaga`, { data });
-
     yield put(getUserSuccess({ userId: data.id, userName: data.display_name }));
   } catch (error: any) {
     yield put(getUserFailed({ message: error.message }));

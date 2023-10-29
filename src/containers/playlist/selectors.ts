@@ -25,4 +25,16 @@ export const playlistSelectors = {
     selectSelf,
     (playlist) => playlist.selectedPlaylist
   ),
+  selectTrackToAdd: createSelector(
+    selectSelf,
+    (playlist) => playlist.trackToAdd
+  ),
+  addTrackToPlaylistStatus: createSelector(
+    selectSelf,
+    (playlist) => playlist.status
+  ),
+  addTrackToPlaylistError: createSelector(
+    selectSelf,
+    (playlist) => playlist.error
+  ),
 };

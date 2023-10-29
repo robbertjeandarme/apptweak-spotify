@@ -8,15 +8,16 @@ import {
   getPlaylistTracks,
   getPlaylistTracksFailed,
   getPlaylistTracksSuccess,
+  addTrackToPlaylist,
+  addTrackToPlaylistSuccess,
+  addTrackToPlaylistFailed,
 } from "./slice";
+import { playlistSelectors } from "./selectors";
+import { Playlist } from "../../types/playlist";
 
 function* getPlaylistsSaga() {
-  console.log(`getPlaylistsSaga`);
-
   try {
     const accessToken: string = yield select(authSelectors.getAccessToken);
-
-    console.log(`accessToken in playlistSaga`, { accessToken });
 
     const request = () => {
       return axios.get("https://api.spotify.com/v1/me/playlists", {
@@ -31,18 +32,13 @@ function* getPlaylistsSaga() {
 
     yield put(getPlaylistsSuccess(data.items));
   } catch (error: any) {
-    console.log(`error in playlistSaga`, { error });
     yield put(getPlaylistsFailed({ message: error.message }));
   }
 }
 
 function* getPlaylistTracksSaga(action: any) {
-  console.log(`getPlaylistTracksSaga`);
-
   try {
     const accessToken: string = yield select(authSelectors.getAccessToken);
-
-    console.log(`accessToken in playlistSaga`, { accessToken });
 
     const request = () => {
       return axios.get(
@@ -61,12 +57,42 @@ function* getPlaylistTracksSaga(action: any) {
     const tracks = data.items.map((item: any) => item.track);
     yield put(getPlaylistTracksSuccess(tracks));
   } catch (error: any) {
-    console.log(`error in playlistSaga`, { error });
     yield put(getPlaylistTracksFailed({ message: error.message }));
+  }
+}
+
+function* addTrackToPlaylistSaga(action: any) {
+  try {
+    const trackUri = action.payload.uri;
+    const accessToken: string = yield select(authSelectors.getAccessToken);
+    const selectedPlaylist: Playlist = yield select(
+      playlistSelectors.selectPlaylist
+    );
+    const request = () => {
+      return axios.post(
+        `https://api.spotify.com/v1/playlists/${selectedPlaylist.id}/tracks`,
+        {
+          uris: [trackUri],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    };
+
+    // get data from request
+    const { data } = yield call(request);
+    yield put(addTrackToPlaylistSuccess(data.items));
+  } catch (error: any) {
+    yield put(addTrackToPlaylistFailed({ message: error.message }));
   }
 }
 
 export default function* playlistSaga() {
   yield takeEvery(getPlaylists.type, getPlaylistsSaga);
   yield takeEvery(getPlaylistTracks.type, getPlaylistTracksSaga);
+  yield takeEvery(addTrackToPlaylist.type, addTrackToPlaylistSaga);
 }

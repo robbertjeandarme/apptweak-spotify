@@ -12,10 +12,7 @@ function PlaylistTracks(): ReactElement {
   const accessToken = useSelector(authSelectors.getAccessToken);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    console.log("tracks in the playlist tracks component");
-    console.log(listOfPlayListTracks);
-  }, [listOfPlayListTracks]);
+  useEffect(() => {}, [listOfPlayListTracks]);
 
   const handlePlayClick = (url: string) => {
     const urlWithToken = `${url}?access_token=${accessToken}`;
@@ -49,6 +46,7 @@ function PlaylistTracks(): ReactElement {
         {listOfPlayListTracks.map((track: Track) => {
           return (
             <Card
+              key={track.id}
               className="shadow"
               style={{ width: "12rem", margin: "0.5rem" }}
             >
