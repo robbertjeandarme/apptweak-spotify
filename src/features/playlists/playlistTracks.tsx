@@ -4,12 +4,10 @@ import { playlistSelectors } from "../../containers/playlist/selectors";
 import { getPlaylistTracks } from "../../containers/playlist/slice";
 import { Item, PlaylistTrack } from "../../types/playlistTrack";
 import { Track } from "../../types/track";
+import { Card } from "react-bootstrap";
 
 function PlaylistTracks(): ReactElement {
   const listOfPlayListTracks = useSelector(playlistSelectors.getPlaylistTracks);
-
-  // const xx = listOfPlayListTracks[0].items[0].track?.name;
-  // console.log(xx);
 
   useEffect(() => {
     console.log("tracks in the playlist tracks component");
@@ -18,15 +16,31 @@ function PlaylistTracks(): ReactElement {
 
   return (
     <>
-      <h1>fjsdfjsdl</h1>
-
-      {listOfPlayListTracks.map((item: Track) => {
-        return (
-          <div>
-            <h1>{item.name}</h1>
-          </div>
-        );
-      })}
+      <div className=" d-flex flex-wrap">
+        {listOfPlayListTracks.map((track: Track) => {
+          return (
+            <Card
+              className="shadow"
+              style={{ width: "12rem", margin: "0.5rem" }}
+            >
+              <Card.Img
+                height={150}
+                variant="top"
+                src={track.album.images[0].url}
+              />
+              <Card.Body>
+                <Card.Title>{track.name}</Card.Title>
+                <Card.Text>
+                  {track.artists.map((artist) => artist.name).join(", ")}
+                </Card.Text>
+                <Card.Text>
+                  Released: {track.album.release_date.toString()}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          );
+        })}
+      </div>
     </>
   );
 }
