@@ -57,8 +57,9 @@ function* getPlaylistTracksSaga(action: any) {
 
     // get data from request
     const { data } = yield call(request);
-    console.log(`data in getPlaylistTracksSaga`, { data });
-    yield put(getPlaylistTracksSuccess(data.items));
+    //filter out the tracks
+    const tracks = data.items.map((item: any) => item.track);
+    yield put(getPlaylistTracksSuccess(tracks));
   } catch (error: any) {
     console.log(`error in playlistSaga`, { error });
     yield put(getPlaylistTracksFailed({ message: error.message }));

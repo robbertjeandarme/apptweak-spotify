@@ -2,9 +2,9 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { ErrorPayload, RequestStatus } from "../../types/requests";
 import { Playlist } from "../../types/playlist";
 import { Track } from "../../types/track";
+import { PlaylistTrack } from "../../types/playlistTrack";
 
 export interface PlaylistState {
-  selectedPlaylist?: Playlist;
   playlists: Playlist[];
   playListTracks: Track[];
   status: RequestStatus;
@@ -12,7 +12,6 @@ export interface PlaylistState {
 }
 
 const initialState: PlaylistState = {
-  selectedPlaylist: undefined,
   playlists: [],
   playListTracks: [],
   status: RequestStatus.IDLE,
@@ -28,7 +27,8 @@ export const getPlaylistsFailed = createAction<ErrorPayload>(
   "playlist/getPlaylistsFailed"
 );
 
-export const getPlaylistTracks = createAction<Track[]>(
+// deze misschien niet nog aanpassen naar een Track tpye
+export const getPlaylistTracks = createAction<PlaylistTrack[]>(
   "playlist/getPlaylistTracks"
 );
 export const getPlaylistTracksSuccess = createAction<Track[]>(

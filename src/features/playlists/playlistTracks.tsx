@@ -2,25 +2,31 @@ import { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { getPlaylistTracks } from "../../containers/playlist/slice";
+import { Item, PlaylistTrack } from "../../types/playlistTrack";
+import { Track } from "../../types/track";
 
 function PlaylistTracks(): ReactElement {
-  //how to get the tracks from the store?
-  const tracks = useSelector(playlistSelectors.getPlaylistTracks);
+  const listOfPlayListTracks = useSelector(playlistSelectors.getPlaylistTracks);
+
+  // const xx = listOfPlayListTracks[0].items[0].track?.name;
+  // console.log(xx);
 
   useEffect(() => {
     console.log("tracks in the playlist tracks component");
-    console.log(tracks);
-  }, [tracks]);
+    console.log(listOfPlayListTracks);
+  }, [listOfPlayListTracks]);
 
   return (
     <>
-      <p>dhfsdhfdskjfhdsfhsdk</p>
-      {tracks.map((track, id) => (
-        <div key={id}>
-          <h1 className="text-bg-danger">{track.name}</h1>
-          <h1>{track.disc_number}</h1>
-        </div>
-      ))}
+      <h1>fjsdfjsdl</h1>
+
+      {listOfPlayListTracks.map((item: Track) => {
+        return (
+          <div>
+            <h1>{item.name}</h1>
+          </div>
+        );
+      })}
     </>
   );
 }
