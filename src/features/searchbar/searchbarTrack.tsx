@@ -1,19 +1,28 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { Track } from "../../types/track";
 import { useDispatch } from "react-redux";
 import { addTrackToPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
+import { toast } from "react-toastify";
+
+// hier zit een bug in, als je een playlist zou de knop groen worden en een track toevegen
+// weet niet of de selectedPlaatlist undefined is of niet
+// track toevegen werkt waneer er een playlist is geselecteerd
 
 interface SearchbarTrackProps {
   track: Track;
 }
 
 function SearchbarTrack(props: SearchbarTrackProps): ReactElement {
+  const track = props.track;
+  const selectedPlaylist = playlistSelectors.selectPlaylist;
+
+  const notify = () => toast.warn("Pleas select a playlist!");
+
   const dispatch = useDispatch();
 
-  const track = props.track;
   return (
     <>
       <div className="d-flex justify-content-between align-items-center w-50  m-2 square border shadow rounded-3">
@@ -26,15 +35,21 @@ function SearchbarTrack(props: SearchbarTrackProps): ReactElement {
         <div>
           <p>{track.name}</p>
         </div>
-        <button
-          className="btn"
-          onClick={() => dispatch(addTrackToPlaylist(track))}
-        >
-          <FontAwesomeIcon
-            icon={faPlusCircle}
-            className="text-success fa-beat"
-          />
-        </button>
+        {selectedPlaylist === undefined ? (
+          <button
+            className="btn"
+            onClick={() => dispatch(addTrackToPlaylist(track))}
+          >
+            <FontAwesomeIcon
+              icon={faPlusCircle}
+              className="text-success fa-beat"
+            />
+          </button>
+        ) : (
+          <button className="btn" onClick={notify}>
+            <FontAwesomeIcon icon={faPlusCircle} className="text-warning" />
+          </button>
+        )}
       </div>
     </>
   );
