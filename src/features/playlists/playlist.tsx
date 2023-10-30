@@ -1,12 +1,15 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { getPlaylists } from "../../containers/playlist/slice";
 import PlaylistItem from "./playlistItem";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddPlaylist from "./addPlaylist";
 
 function PlayList(): ReactElement {
+  const [showAddPlaylist, setShowAddPlaylist] = useState(false);
+
   const dispatch = useDispatch();
 
   const playlists = useSelector(playlistSelectors.getPlaylists);
@@ -20,10 +23,18 @@ function PlayList(): ReactElement {
       <div className="d-flex flex-column bg-body-tertiary rounded-2  p-2 m-2">
         <div className="d-flex justify-content-between m-1">
           <h4>Playlists</h4>
-          <button className="btn ">
-            <FontAwesomeIcon icon={faPlus} className="text-success fs-4" />
-          </button>
+          {showAddPlaylist === false ? (
+            <button className="btn" onClick={() => setShowAddPlaylist(true)}>
+              <FontAwesomeIcon icon={faPlus} className="text-success fs-4" />
+            </button>
+          ) : (
+            <button className="btn" onClick={() => setShowAddPlaylist(false)}>
+              <FontAwesomeIcon icon={faMinus} className="text-danger fs-4" />
+            </button>
+          )}
         </div>
+
+        {showAddPlaylist && <AddPlaylist></AddPlaylist>}
 
         {playlists.map((playlist) => (
           <PlaylistItem key={playlist.id} playlist={playlist}></PlaylistItem>

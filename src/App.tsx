@@ -31,6 +31,7 @@ const App: FC = (): ReactElement => {
                 <h4 className="text-center">Select a playlist</h4>
               )}
               <h4>{selectedPlaylist?.name}</h4>
+              <h6 className="opacity-75">{selectedPlaylist?.description}</h6>
             </Row>
             <PlaylistTracks></PlaylistTracks>
           </Col>
