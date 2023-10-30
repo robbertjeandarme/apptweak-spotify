@@ -11,6 +11,9 @@ import {
   addTrackToPlaylist,
   addTrackToPlaylistSuccess,
   addTrackToPlaylistFailed,
+  deleteTrackFromPlaylist,
+  deleteTrackFromPlaylistSuccess,
+  deleteTrackFromPlaylistFailed,
 } from "./slice";
 import { playlistSelectors } from "./selectors";
 import { Playlist } from "../../types/playlist";
@@ -91,8 +94,46 @@ function* addTrackToPlaylistSaga(action: any) {
   }
 }
 
+function* deleteTrackFromPlaylistSaga(action: any) {
+  try {
+    const trackUri = action.payload.uri;
+    const accessToken: string = yield select(authSelectors.getAccessToken);
+    const selectedPlaylist: Playlist = yield select(
+      playlistSelectors.selectPlaylist
+    );
+    const request = () => {
+      return axios.delete(
+        `https://api.spotify.com/v1/playlists/${selectedPlaylist.id}/tracks`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          data: {
+            tracks: [
+              {
+                uri: trackUri,
+              },
+            ],
+          },
+        }
+      );
+    };
+
+    // get data from request
+
+    const { data } = yield call(request);
+    console.log("data from delete track from playlist saga");
+    console.log(data);
+    yield put(deleteTrackFromPlaylistSuccess(data)); // kan de foute zijn
+  } catch (error: any) {
+    yield put(deleteTrackFromPlaylistFailed({ message: error.message }));
+  }
+}
+
 export default function* playlistSaga() {
   yield takeEvery(getPlaylists.type, getPlaylistsSaga);
   yield takeEvery(getPlaylistTracks.type, getPlaylistTracksSaga);
   yield takeEvery(addTrackToPlaylist.type, addTrackToPlaylistSaga);
+  yield takeEvery(deleteTrackFromPlaylist.type, deleteTrackFromPlaylistSaga);
 }

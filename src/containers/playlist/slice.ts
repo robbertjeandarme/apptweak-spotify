@@ -7,6 +7,7 @@ import { PlaylistTrack } from "../../types/playlistTrack";
 export interface PlaylistState {
   selectedPlaylist?: Playlist;
   trackToAdd?: Track;
+  trackToDelete?: Track;
   playlists: Playlist[];
   playListTracks: Track[];
   status: RequestStatus;
@@ -15,6 +16,7 @@ export interface PlaylistState {
 
 const initialState: PlaylistState = {
   trackToAdd: undefined,
+  trackToDelete: undefined,
   selectedPlaylist: undefined,
   playlists: [],
   playListTracks: [],
@@ -31,7 +33,6 @@ export const getPlaylistsFailed = createAction<ErrorPayload>(
   "playlist/getPlaylistsFailed"
 );
 
-// deze misschien niet nog aanpassen naar een Track tpye
 export const getPlaylistTracks = createAction<PlaylistTrack[]>(
   "playlist/getPlaylistTracks"
 );
@@ -55,6 +56,17 @@ export const addTrackToPlaylistSuccess = createAction<Track>(
 );
 export const addTrackToPlaylistFailed = createAction<ErrorPayload>(
   "playlist/addTrackToPlaylistFailed"
+);
+
+//delete track from playlist
+export const deleteTrackFromPlaylist = createAction<Track>(
+  "playlist/deleteTrackFromPlaylist"
+);
+export const deleteTrackFromPlaylistSuccess = createAction<Track>(
+  "playlist/deleteTrackFromPlaylistSuccess"
+);
+export const deleteTrackFromPlaylistFailed = createAction<ErrorPayload>(
+  "playlist/deleteTrackFromPlaylistFailed"
 );
 
 const playlistSlice = createSlice({
@@ -99,6 +111,26 @@ const playlistSlice = createSlice({
         state.trackToAdd = action.payload;
       })
       .addCase(addTrackToPlaylistFailed, (state, action) => {
+        state.status = RequestStatus.ERROR;
+        state.error = action.payload.message;
+      })
+      .addCase(deleteTrackFromPlaylist, (state, action) => {
+        state.status = RequestStatus.PENDING;
+        state.trackToDelete = action.payload;
+      })
+      .addCase(deleteTrackFromPlaylistSuccess, (state, action) => {
+        console.log("deleteTrackFromPlaylistSuccess action.payload ");
+        console.log(action.payload);
+
+        state.status = RequestStatus.SUCCESS;
+        state.trackToDelete = action.payload;
+        console.log("state.trackToDelete");
+        console.log(state.trackToDelete);
+        state.playListTracks = state.playListTracks.filter(
+          (track) => track.id !== action.payload.id
+        );
+      })
+      .addCase(deleteTrackFromPlaylistFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
       });

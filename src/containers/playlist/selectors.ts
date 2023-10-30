@@ -37,4 +37,16 @@ export const playlistSelectors = {
     selectSelf,
     (playlist) => playlist.error
   ),
+  deleteTrackFromPlaylist: createSelector(
+    selectSelf,
+    (playlist) => playlist.trackToDelete
+  ),
+  deleteTrackFromPlaylistStatus: createSelector(
+    selectSelf,
+    (playlist) => playlist.status
+  ),
+  deleteTrackFromPlaylistError: createSelector(
+    selectSelf,
+    (playlist) => playlist.error
+  ),
 };

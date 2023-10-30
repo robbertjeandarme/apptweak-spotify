@@ -1,18 +1,25 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { Track } from "../../types/track";
 import { Card } from "react-bootstrap";
 import { authSelectors } from "../../containers/auth/selectors";
-import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faStop, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteTrackFromPlaylist } from "../../containers/playlist/slice";
 
 function PlaylistTracks(): ReactElement {
   const listOfPlayListTracks = useSelector(playlistSelectors.getPlaylistTracks);
-  const accessToken = useSelector(authSelectors.getAccessToken);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
+  const accessToken = useSelector(authSelectors.getAccessToken);
+  const dispatch = useDispatch();
+
   useEffect(() => {}, [listOfPlayListTracks]);
+
+  const handleDeleteTrack = (track: Track) => {
+    dispatch(deleteTrackFromPlaylist(track));
+  };
 
   const handlePlayClick = (url: string) => {
     const urlWithToken = `${url}?access_token=${accessToken}`;
@@ -77,6 +84,12 @@ function PlaylistTracks(): ReactElement {
                     onClick={handleStopClick}
                   >
                     <FontAwesomeIcon icon={faStop} />
+                  </button>
+                  <button
+                    className="btn text-danger"
+                    onClick={() => dispatch(deleteTrackFromPlaylist(track))}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 </small>
               </Card.Footer>

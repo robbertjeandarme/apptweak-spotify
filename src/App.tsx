@@ -11,6 +11,7 @@ import PlayList from "./features/playlists/playlist";
 import PlaylistTracks from "./features/playlists/playlistTracks";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const App: FC = (): ReactElement => {
   const user = useSelector(authSelectors.getUser);
   const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
