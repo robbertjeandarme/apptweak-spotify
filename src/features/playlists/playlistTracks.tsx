@@ -17,10 +17,6 @@ function PlaylistTracks(): ReactElement {
 
   useEffect(() => {}, [listOfPlayListTracks]);
 
-  const handleDeleteTrack = (track: Track) => {
-    dispatch(deleteTrackFromPlaylist(track));
-  };
-
   const handlePlayClick = (url: string) => {
     const urlWithToken = `${url}?access_token=${accessToken}`;
     const newAudio = new Audio(urlWithToken);

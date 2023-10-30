@@ -97,6 +97,9 @@ function* addTrackToPlaylistSaga(action: any) {
 function* deleteTrackFromPlaylistSaga(action: any) {
   try {
     const trackUri = action.payload.uri;
+    console.log("deleteTrackFromPlaylistSaga trackUri");
+    console.log(trackUri);
+
     const accessToken: string = yield select(authSelectors.getAccessToken);
     const selectedPlaylist: Playlist = yield select(
       playlistSelectors.selectPlaylist
@@ -123,9 +126,9 @@ function* deleteTrackFromPlaylistSaga(action: any) {
     // get data from request
 
     const { data } = yield call(request);
-    console.log("data from delete track from playlist saga");
-    console.log(data);
-    yield put(deleteTrackFromPlaylistSuccess(data)); // kan de foute zijn
+
+    // voor deze actie moet je de track meegeven die je wilt verwijderen niet de response van de request
+    yield put(deleteTrackFromPlaylistSuccess(action.payload));
   } catch (error: any) {
     yield put(deleteTrackFromPlaylistFailed({ message: error.message }));
   }

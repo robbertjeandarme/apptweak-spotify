@@ -116,7 +116,6 @@ const playlistSlice = createSlice({
       })
       .addCase(deleteTrackFromPlaylist, (state, action) => {
         state.status = RequestStatus.PENDING;
-        state.trackToDelete = action.payload;
       })
       .addCase(deleteTrackFromPlaylistSuccess, (state, action) => {
         console.log("deleteTrackFromPlaylistSuccess action.payload ");
