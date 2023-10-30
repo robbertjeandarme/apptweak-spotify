@@ -49,4 +49,14 @@ export const playlistSelectors = {
     selectSelf,
     (playlist) => playlist.error
   ),
+  addplaylistStatus: createSelector(selectSelf, (playlist) => playlist.status),
+  addplaylistError: createSelector(selectSelf, (playlist) => playlist.error),
+  addplaylist: createSelector(
+    selectSelf,
+    (playlist) => playlist.selectedPlaylist
+  ),
+  addPictureToPlaylist: createSelector(
+    selectSelf,
+    (playlist) => playlist.selectedPlaylist
+  ),
 };

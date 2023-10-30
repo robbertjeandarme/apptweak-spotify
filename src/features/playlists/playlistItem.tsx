@@ -26,10 +26,11 @@ function PlaylistItem(prop: PlaylistsProps): ReactElement {
         className={`d-flex align-items-center m-1 square  shadow hover ${
           openPlaylist?.id === prop.playlist.id ? "openPlaylist" : ""
         }`}
-        key={prop.playlist.id}
+        key={prop?.playlist.id}
         onClick={() => handlePlayListClick(prop.playlist)}
       >
-        <img width={60} src={prop.playlist.images[0].url} alt="" />
+        <img width={60} src={prop.playlist?.images[0]?.url} alt="" />
+
         <div className="d-flex flex-column m-1">
           <p className="m-0">{prop.playlist.name}</p>
           <p className="opacity-50 m-0">{prop.playlist.owner.display_name}</p>

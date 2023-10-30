@@ -69,6 +69,20 @@ export const deleteTrackFromPlaylistFailed = createAction<ErrorPayload>(
   "playlist/deleteTrackFromPlaylistFailed"
 );
 
+//add playlist
+export const addPlaylist = createAction<Playlist>("playlist/addPlaylist");
+export const addPlaylistSuccess = createAction<Playlist>(
+  "playlist/addPlaylistSuccess"
+);
+export const addPlaylistFailed = createAction<ErrorPayload>(
+  "playlist/addPlaylistFailed"
+);
+
+//add picture to playlist
+export const addPictureToPlaylist = createAction<string>(
+  "playlist/addPictureToPlaylist"
+);
+
 const playlistSlice = createSlice({
   name: "playlist",
   initialState,
@@ -114,7 +128,7 @@ const playlistSlice = createSlice({
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
       })
-      .addCase(deleteTrackFromPlaylist, (state, action) => {
+      .addCase(deleteTrackFromPlaylist, (state) => {
         state.status = RequestStatus.PENDING;
       })
       .addCase(deleteTrackFromPlaylistSuccess, (state, action) => {
@@ -132,6 +146,22 @@ const playlistSlice = createSlice({
       .addCase(deleteTrackFromPlaylistFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
+      })
+      .addCase(addPlaylist, (state) => {
+        state.status = RequestStatus.PENDING;
+      })
+      .addCase(addPlaylistSuccess, (state, action) => {
+        console.log("addPlaylistSuccess action.payload ");
+        console.log(action.payload);
+        state.status = RequestStatus.SUCCESS;
+        state.playlists.push(action.payload);
+      })
+      .addCase(addPlaylistFailed, (state, action) => {
+        state.status = RequestStatus.ERROR;
+        state.error = action.payload.message;
+      })
+      .addCase(addPictureToPlaylist, (state, action) => {
+        state.status = RequestStatus.SUCCESS;
       });
   },
 });
