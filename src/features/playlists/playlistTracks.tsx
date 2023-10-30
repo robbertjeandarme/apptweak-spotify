@@ -6,13 +6,19 @@ import { Card } from "react-bootstrap";
 import { authSelectors } from "../../containers/auth/selectors";
 import { faPlay, faStop, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteTrackFromPlaylist } from "../../containers/playlist/slice";
+import {
+  deleteTrackFromPlaylist,
+  selectedPlaylist,
+} from "../../containers/playlist/slice";
 
 function PlaylistTracks(): ReactElement {
   const listOfPlayListTracks = useSelector(playlistSelectors.getPlaylistTracks);
+  const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
+  const accessToken = useSelector(authSelectors.getAccessToken);
+  const user = useSelector(authSelectors.getUser);
+
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-  const accessToken = useSelector(authSelectors.getAccessToken);
   const dispatch = useDispatch();
 
   useEffect(() => {}, [listOfPlayListTracks]);
@@ -81,12 +87,14 @@ function PlaylistTracks(): ReactElement {
                   >
                     <FontAwesomeIcon icon={faStop} />
                   </button>
-                  <button
-                    className="btn text-danger"
-                    onClick={() => dispatch(deleteTrackFromPlaylist(track))}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </button>
+                  {user?.userId === selectedPlaylist?.owner.id && (
+                    <button
+                      className="btn text-danger"
+                      onClick={() => dispatch(deleteTrackFromPlaylist(track))}
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
+                  )}
                 </small>
               </Card.Footer>
             </Card>
