@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addPlaylist } from "../../containers/playlist/slice";
-
+import { toast } from "react-toastify";
 interface AddPlaylistProps {
   onClose: () => void;
 }
@@ -12,11 +12,18 @@ interface AddPlaylistProps {
 function AddPlaylist({ onClose }: AddPlaylistProps): ReactElement {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const notify = () => toast.error("Please enter a name!");
 
   const dispatch = useDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (name === "") {
+      notify();
+      return;
+    }
+
     dispatch(addPlaylist({ name, description } as any));
     onClose();
   };
