@@ -50,7 +50,15 @@ function Searchbar(): ReactElement {
     <Container className="m-4">
       <Row>
         <Col sm={12}>
-          <Form className="d-flex">
+          <Form
+            className="d-flex"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (searchInput.length !== 0 && !loading) {
+                onSearch();
+              }
+            }}
+          >
             <Form.Control
               type="search"
               onChange={handleSearchInputChange}
@@ -59,8 +67,8 @@ function Searchbar(): ReactElement {
               aria-label="Search"
             />
             <Button
+              type="submit"
               disabled={searchInput.length === 0 || loading}
-              onClick={onSearch}
               className="rounded-pill"
               variant="outline-success"
             >
