@@ -30,7 +30,6 @@ const App: FC = (): ReactElement => {
             <Searchbar></Searchbar>
             <Row className="m-1">
               <PlaylistInfo></PlaylistInfo>
-              <EditPlaylist></EditPlaylist>
             </Row>
             <PlaylistTracks></PlaylistTracks>
           </Col>

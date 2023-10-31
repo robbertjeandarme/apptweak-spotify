@@ -25,11 +25,11 @@ function EditPlaylist(): ReactElement {
 
   return (
     <>
-      <Form className="m-2" onSubmit={handleSubmit}>
+      <Form className="m-2 bg-body-tertiary rounded-3" onSubmit={handleSubmit}>
         <Form.Group controlId="formName" className="my-2">
           <Form.Control
             type="text"
-            placeholder="Enter name"
+            placeholder="Enter new name"
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
@@ -39,7 +39,7 @@ function EditPlaylist(): ReactElement {
           <Form.Control
             as="textarea"
             rows={3}
-            placeholder="Enter description"
+            placeholder="Enter new description"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />

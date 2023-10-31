@@ -1,12 +1,14 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { selectedPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import EditPlaylist from "./editPlaylist";
 
 function PlaylistInfo(): ReactElement {
   const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
+  const [showEditPlaylist, setShowEditPlaylist] = useState(false);
 
   return (
     <>
@@ -21,10 +23,16 @@ function PlaylistInfo(): ReactElement {
 
         <div className="justify-content-center d-flex">
           <button className="btn">
-            <FontAwesomeIcon icon={faEdit} className="text-warning fs-4" />
+            <FontAwesomeIcon
+              icon={faEdit}
+              onClick={() => setShowEditPlaylist(!showEditPlaylist)}
+              className="text-warning fs-4"
+            />
           </button>
         </div>
       </div>
+
+      {showEditPlaylist && <EditPlaylist></EditPlaylist>}
     </>
   );
 }
