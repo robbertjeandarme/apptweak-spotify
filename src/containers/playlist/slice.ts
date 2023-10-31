@@ -78,11 +78,6 @@ export const addPlaylistFailed = createAction<ErrorPayload>(
   "playlist/addPlaylistFailed"
 );
 
-//add picture to playlist
-export const addPictureToPlaylist = createAction<string>(
-  "playlist/addPictureToPlaylist"
-);
-
 const playlistSlice = createSlice({
   name: "playlist",
   initialState,
@@ -159,9 +154,6 @@ const playlistSlice = createSlice({
       .addCase(addPlaylistFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
-      })
-      .addCase(addPictureToPlaylist, (state, action) => {
-        state.status = RequestStatus.SUCCESS;
       });
   },
 });

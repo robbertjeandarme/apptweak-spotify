@@ -17,7 +17,6 @@ import {
   addPlaylist,
   addPlaylistSuccess,
   addPlaylistFailed,
-  addPictureToPlaylist,
 } from "./slice";
 import { playlistSelectors } from "./selectors";
 import { Playlist } from "../../types/playlist";
@@ -173,40 +172,10 @@ function* addPlaylistSaga(action: any) {
   }
 }
 
-function* addPictureToPlaylistSaga(action: any) {
-  try {
-    const accessToken: string = yield select(authSelectors.getAccessToken);
-    const selectedPlaylist: Playlist = yield select(
-      playlistSelectors.selectPlaylist
-    );
-    const request = () => {
-      return axios.put(
-        `https://api.spotify.com/v1/playlists/${selectedPlaylist.id}/images`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "image/jpeg",
-          },
-          data: {
-            image: action.payload,
-          },
-        }
-      );
-    };
-
-    // get data from request
-    const { data } = yield call(request);
-    //yield put(addPlaylistSuccess(data.items));
-  } catch (error: any) {
-    //yield put(addPlaylistFailed({ message: error.message }));
-  }
-}
-
 export default function* playlistSaga() {
   yield takeEvery(getPlaylists.type, getPlaylistsSaga);
   yield takeEvery(getPlaylistTracks.type, getPlaylistTracksSaga);
   yield takeEvery(addTrackToPlaylist.type, addTrackToPlaylistSaga);
   yield takeEvery(deleteTrackFromPlaylist.type, deleteTrackFromPlaylistSaga);
   yield takeEvery(addPlaylist.type, addPlaylistSaga);
-  yield takeEvery(addPictureToPlaylist.type, addPictureToPlaylistSaga);
 }

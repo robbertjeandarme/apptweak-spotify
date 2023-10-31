@@ -55,8 +55,4 @@ export const playlistSelectors = {
     selectSelf,
     (playlist) => playlist.selectedPlaylist
   ),
-  addPictureToPlaylist: createSelector(
-    selectSelf,
-    (playlist) => playlist.selectedPlaylist
-  ),
 };
