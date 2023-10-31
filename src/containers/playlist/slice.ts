@@ -25,6 +25,7 @@ const initialState: PlaylistState = {
 
 // actions
 
+// get playlists
 export const getPlaylists = createAction("playlist/getPlaylists");
 export const getPlaylistsSuccess = createAction<Playlist[]>(
   "playlist/getPlaylistsSuccess"
@@ -33,6 +34,7 @@ export const getPlaylistsFailed = createAction<ErrorPayload>(
   "playlist/getPlaylistsFailed"
 );
 
+// get playlist tracks
 export const getPlaylistTracks = createAction<PlaylistTrack[]>(
   "playlist/getPlaylistTracks"
 );
@@ -43,6 +45,7 @@ export const getPlaylistTracksFailed = createAction<ErrorPayload>(
   "playlist/getPlaylistTracksFailed"
 );
 
+// select playlist
 export const selectedPlaylist = createAction<Playlist>(
   "playlist/selectedPlaylist"
 );
@@ -76,6 +79,15 @@ export const addPlaylistSuccess = createAction<Playlist>(
 );
 export const addPlaylistFailed = createAction<ErrorPayload>(
   "playlist/addPlaylistFailed"
+);
+
+// edit playlist
+export const editPlaylist = createAction<Playlist>("playlist/editPlaylist");
+export const editPlaylistSuccess = createAction<Playlist>(
+  "playlist/editPlaylistSuccess"
+);
+export const editPlaylistFailed = createAction<ErrorPayload>(
+  "playlist/editPlaylistFailed"
 );
 
 const playlistSlice = createSlice({
@@ -127,13 +139,8 @@ const playlistSlice = createSlice({
         state.status = RequestStatus.PENDING;
       })
       .addCase(deleteTrackFromPlaylistSuccess, (state, action) => {
-        console.log("deleteTrackFromPlaylistSuccess action.payload ");
-        console.log(action.payload);
-
         state.status = RequestStatus.SUCCESS;
         state.trackToDelete = action.payload;
-        console.log("state.trackToDelete");
-        console.log(state.trackToDelete);
         state.playListTracks = state.playListTracks.filter(
           (track) => track.id !== action.payload.id
         );
@@ -146,12 +153,25 @@ const playlistSlice = createSlice({
         state.status = RequestStatus.PENDING;
       })
       .addCase(addPlaylistSuccess, (state, action) => {
-        console.log("addPlaylistSuccess action.payload ");
-        console.log(action.payload);
         state.status = RequestStatus.SUCCESS;
         state.playlists.push(action.payload);
       })
       .addCase(addPlaylistFailed, (state, action) => {
+        state.status = RequestStatus.ERROR;
+        state.error = action.payload.message;
+      })
+      .addCase(editPlaylist, (state) => {
+        state.status = RequestStatus.PENDING;
+      })
+      .addCase(editPlaylistSuccess, (state, action) => {
+        console.log("editPlaylistSuccess action.payload ");
+        console.log(action.payload);
+        state.status = RequestStatus.SUCCESS;
+        state.playlists = state.playlists.map((playlist) =>
+          playlist.id === action.payload.id ? action.payload : playlist
+        );
+      })
+      .addCase(editPlaylistFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
       });
