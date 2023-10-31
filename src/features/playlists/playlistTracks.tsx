@@ -43,7 +43,6 @@ function PlaylistTracks(): ReactElement {
 
   const handleStopClick = () => {
     if (audio) {
-      console.log("Stopping audio");
       audio.pause();
       audio.currentTime = 0;
     }

@@ -13,7 +13,7 @@ export interface PlaylistsProps {
 
 function PlaylistItem(prop: PlaylistsProps): ReactElement {
   const openPlaylist = useSelector(playlistSelectors.selectPlaylist);
-  console.log(prop);
+
   const dispatch = useDispatch();
 
   const handlePlayListClick = (currentSelectedPlaylist: Playlist) => {

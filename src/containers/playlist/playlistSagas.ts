@@ -104,8 +104,6 @@ function* addTrackToPlaylistSaga(action: any) {
 function* deleteTrackFromPlaylistSaga(action: any) {
   try {
     const trackUri = action.payload.uri;
-    console.log("deleteTrackFromPlaylistSaga trackUri");
-    console.log(trackUri);
 
     const accessToken: string = yield select(authSelectors.getAccessToken);
     const selectedPlaylist: Playlist = yield select(
@@ -145,8 +143,6 @@ function* addPlaylistSaga(action: any) {
   try {
     const accessToken: string = yield select(authSelectors.getAccessToken);
     const user: User = yield select(authSelectors.getUser);
-    console.log("addPlaylistSaga user");
-    console.log(user);
 
     const request = () => {
       return axios.post(
@@ -166,8 +162,7 @@ function* addPlaylistSaga(action: any) {
 
     // get data from request
     const { data } = yield call(request);
-    console.log("addPlaylistSaga data");
-    console.log(data);
+
     yield put(addPlaylistSuccess(data));
   } catch (error: any) {
     yield put(addPlaylistFailed({ message: error.message }));
@@ -178,12 +173,16 @@ function* editPlaylistSaga(action: any) {
   try {
     const accessToken: string = yield select(authSelectors.getAccessToken);
     const user: User = yield select(authSelectors.getUser);
-    console.log("addPlaylistSaga user");
-    console.log(user);
+    const selectedPlaylist: Playlist = yield select(
+      playlistSelectors.selectPlaylist
+    );
+
+    console.log("editPlaylistSaga action.payload");
+    console.log(action.payload);
 
     const request = () => {
       return axios.put(
-        `https://api.spotify.com/v1/users/${user.userId}/playlists`,
+        `https://api.spotify.com/v1/playlists/${selectedPlaylist.id}`,
         {
           name: action.payload.name,
           description: action.payload.description,
@@ -197,10 +196,19 @@ function* editPlaylistSaga(action: any) {
       );
     };
 
-    // get data from request
-    const { data } = yield call(request);
-    console.log("addPlaylistSaga data");
-    console.log(data);
+    // object maken voor terug te geven aan de slice
+    console.log("beforre request");
+
+    // data komt leeg terug
+    let { data } = yield call(request);
+    // data opvullen met de data die we al hebben en de nieuwe data
+    data = {
+      ...selectedPlaylist,
+      name: action.payload.name,
+      description: action.payload.description,
+    } as Playlist;
+
+    // nieuwe data object meegeven aan de slice
     yield put(editPlaylistSuccess(data));
   } catch (error: any) {
     yield put(editPlaylistFailed({ message: error.message }));

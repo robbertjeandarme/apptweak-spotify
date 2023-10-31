@@ -11,6 +11,8 @@ import PlayList from "./features/playlists/playlist";
 import PlaylistTracks from "./features/playlists/playlistTracks";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PlaylistInfo from "./features/playlists/playlistInfo";
+import EditPlaylist from "./features/playlists/editPlaylist";
 
 const App: FC = (): ReactElement => {
   const user = useSelector(authSelectors.getUser);
@@ -27,11 +29,8 @@ const App: FC = (): ReactElement => {
           <Col lg={9}>
             <Searchbar></Searchbar>
             <Row className="m-1">
-              {selectedPlaylist === undefined && (
-                <h4 className="text-center">Select a playlist</h4>
-              )}
-              <h4>{selectedPlaylist?.name}</h4>
-              <h6 className="opacity-75">{selectedPlaylist?.description}</h6>
+              <PlaylistInfo></PlaylistInfo>
+              <EditPlaylist></EditPlaylist>
             </Row>
             <PlaylistTracks></PlaylistTracks>
           </Col>

@@ -57,8 +57,5 @@ export const playlistSelectors = {
   ),
   editplaylistStatus: createSelector(selectSelf, (playlist) => playlist.status),
   editplaylistError: createSelector(selectSelf, (playlist) => playlist.error),
-  editplaylist: createSelector(
-    selectSelf,
-    (playlist) => playlist.selectedPlaylist
-  ),
+  editplaylist: createSelector(selectSelf, (playlist) => playlist.playlists),
 };
