@@ -5,10 +5,19 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import EditPlaylist from "./editPlaylist";
+import { authSelectors } from "../../containers/auth/selectors";
 
 function PlaylistInfo(): ReactElement {
   const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
+  const user = useSelector(authSelectors.getUser);
   const [showEditPlaylist, setShowEditPlaylist] = useState(false);
+
+  const validteCorrectOwner = () => {
+    if (selectedPlaylist?.owner.id === user?.userId) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <>
@@ -22,13 +31,14 @@ function PlaylistInfo(): ReactElement {
         </div>
 
         <div className="justify-content-center d-flex">
-          <button className="btn">
-            <FontAwesomeIcon
-              icon={faEdit}
+          {selectedPlaylist && validteCorrectOwner() && (
+            <button
+              className="btn"
               onClick={() => setShowEditPlaylist(!showEditPlaylist)}
-              className="text-warning fs-4"
-            />
-          </button>
+            >
+              <FontAwesomeIcon icon={faEdit} className="text-warning fs-4" />
+            </button>
+          )}
         </div>
       </div>
 
