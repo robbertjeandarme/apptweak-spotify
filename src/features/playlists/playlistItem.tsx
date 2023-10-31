@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { Playlist } from "../../types/playlist";
 import { useDispatch, useSelector } from "react-redux";
 import { playlistSelectors } from "../../containers/playlist/selectors";
+
 import {
   getPlaylistTracks,
   selectedPlaylist,
@@ -12,7 +13,7 @@ export interface PlaylistsProps {
 
 function PlaylistItem(prop: PlaylistsProps): ReactElement {
   const openPlaylist = useSelector(playlistSelectors.selectPlaylist);
-
+  console.log(prop);
   const dispatch = useDispatch();
 
   const handlePlayListClick = (currentSelectedPlaylist: Playlist) => {
@@ -29,7 +30,15 @@ function PlaylistItem(prop: PlaylistsProps): ReactElement {
         key={prop?.playlist.id}
         onClick={() => handlePlayListClick(prop.playlist)}
       >
-        <img width={60} src={prop.playlist?.images[0]?.url} alt="" />
+        <img
+          width={60}
+          src={
+            prop.playlist?.images?.length !== 0 && prop.playlist.images[0]?.url
+              ? prop.playlist.images[0].url
+              : "https://www.scdn.co/i/_global/twitter_card-default.jpg"
+          }
+          alt=""
+        />
 
         <div className="d-flex flex-column m-1">
           <p className="m-0">{prop.playlist.name}</p>

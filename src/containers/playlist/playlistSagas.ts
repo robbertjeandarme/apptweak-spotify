@@ -151,7 +151,6 @@ function* addPlaylistSaga(action: any) {
         {
           name: action.payload.name,
           description: action.payload.description,
-          public: action.payload.public,
         },
         {
           headers: {

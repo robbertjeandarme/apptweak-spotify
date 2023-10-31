@@ -34,7 +34,9 @@ function PlayList(): ReactElement {
           )}
         </div>
 
-        {showAddPlaylist && <AddPlaylist></AddPlaylist>}
+        {showAddPlaylist && (
+          <AddPlaylist onClose={() => setShowAddPlaylist(false)}></AddPlaylist>
+        )}
 
         {playlists.map((playlist) => (
           <PlaylistItem key={playlist.id} playlist={playlist}></PlaylistItem>

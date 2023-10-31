@@ -3,31 +3,26 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addPlaylist } from "../../containers/playlist/slice";
 
-function AddPlaylist(): ReactElement {
+interface AddPlaylistProps {
+  onClose: () => void;
+}
+
+// onclose is a function that will be passed from the parent component
+
+function AddPlaylist({ onClose }: AddPlaylistProps): ReactElement {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
-  const [picture, setPicture] = useState("");
 
   const dispatch = useDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(addPlaylist({ name, description, public: isPublic } as any));
+    dispatch(addPlaylist({ name, description } as any));
+    onClose();
   };
 
   return (
     <Form className="m-2" onSubmit={handleSubmit}>
-      <Form.Group controlId="formIsPublic">
-        <Form.Check
-          className=""
-          type="checkbox"
-          label="Public"
-          checked={isPublic}
-          onChange={(event) => setIsPublic(event.target.checked)}
-        />
-      </Form.Group>
-
       <Form.Group controlId="formName" className="my-2">
         <Form.Control
           type="text"
