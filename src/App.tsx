@@ -1,23 +1,18 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { FC, ReactElement, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { authSelectors } from "./containers/auth/selectors";
-import { playlistSelectors } from "./containers/playlist/selectors";
+import { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
 import Header from "./core/header";
 import { Container, Row, Col } from "react-bootstrap";
 import Searchbar from "./features/searchbar/searchbar";
 import PlayList from "./features/playlists/playlist";
 import PlaylistTracks from "./features/playlists/playlistTracks";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PlaylistInfo from "./features/playlists/playlistInfo";
-import EditPlaylist from "./features/playlists/editPlaylist";
 import { preferencesSelectors } from "./containers/preferences/selectors";
 
 const App: FC = (): ReactElement => {
-  const user = useSelector(authSelectors.getUser);
-  const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
   const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
   return (
     <>
@@ -25,7 +20,10 @@ const App: FC = (): ReactElement => {
       <Container
         fluid
         className={`${isDarkMode ? "text-white" : ""}`}
-        style={isDarkMode ? { backgroundColor: "#1B1E21" } : {}}
+        style={{
+          backgroundColor: isDarkMode ? "#1B1E21" : undefined,
+          minHeight: "100vh",
+        }}
       >
         <Row>
           <Col lg={3}>

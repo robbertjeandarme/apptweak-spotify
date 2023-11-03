@@ -9,14 +9,11 @@
 }
 
 .openPlaylist {
-  /* make al text in this class green */
-
   transform: scale(1.06);
   border: #53535346 1px solid;
 }
 
 .dark-placeholder::placeholder {
-  /* Most modern browsers */
   color: white !important;
   opacity: 0.5 !important;
 }
