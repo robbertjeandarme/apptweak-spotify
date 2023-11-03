@@ -6,10 +6,7 @@ import { Card } from "react-bootstrap";
 import { authSelectors } from "../../containers/auth/selectors";
 import { faPlay, faStop, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  deleteTrackFromPlaylist,
-  selectedPlaylist,
-} from "../../containers/playlist/slice";
+import { deleteTrackFromPlaylist } from "../../containers/playlist/slice";
 import { preferencesSelectors } from "../../containers/preferences/selectors";
 import { toast } from "react-toastify";
 

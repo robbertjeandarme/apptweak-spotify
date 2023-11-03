@@ -1,5 +1,4 @@
 import { ReactElement, useState } from "react";
-import { selectedPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

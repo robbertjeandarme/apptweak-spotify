@@ -1,9 +1,7 @@
 import { ReactElement, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import addPlaylist from "./addPlaylist";
 import { useDispatch, useSelector } from "react-redux";
 import { editPlaylist } from "../../containers/playlist/slice";
-import { playlistSelectors } from "../../containers/playlist/selectors";
 import { preferencesSelectors } from "../../containers/preferences/selectors";
 import { toast } from "react-toastify";
 
@@ -15,7 +13,6 @@ function EditPlaylist({ onClose }: EditPlaylistProps): ReactElement {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
   const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   const dispatch = useDispatch();

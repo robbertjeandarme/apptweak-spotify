@@ -1,6 +1,6 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { Track } from "../../types/track";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrackToPlaylist } from "../../containers/playlist/slice";
