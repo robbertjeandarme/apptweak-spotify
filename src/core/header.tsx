@@ -9,9 +9,11 @@ function Header(): ReactElement {
   const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   return (
-    <Navbar className={isDarkMode ? "bg-dark" : "bg-body-tertiary"}>
+    <Navbar className={isDarkMode ? "bg-dark text-white" : "bg-body-tertiary"}>
       <Container>
-        <Navbar.Brand href="#home">Spotify</Navbar.Brand>
+        <Navbar.Brand className={isDarkMode ? "text-white" : ""}>
+          Spotify app-tweak
+        </Navbar.Brand>
         <Button
           className={isDarkMode ? "btn btn-light" : "btn btn-dark"}
           onClick={() => dispatch(toggleDarkmode())}

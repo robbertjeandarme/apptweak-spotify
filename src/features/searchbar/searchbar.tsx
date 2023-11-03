@@ -49,7 +49,7 @@ function Searchbar(): ReactElement {
   }, []);
 
   return (
-    <Container className="m-4">
+    <Container className=" my-3">
       <Row>
         <Col sm={12}>
           <Form
