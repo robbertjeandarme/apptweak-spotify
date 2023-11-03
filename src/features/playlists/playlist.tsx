@@ -6,6 +6,7 @@ import PlaylistItem from "./playlistItem";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddPlaylist from "./addPlaylist";
+import { preferencesSelectors } from "../../containers/preferences/selectors";
 
 function PlayList(): ReactElement {
   const [showAddPlaylist, setShowAddPlaylist] = useState(false);
@@ -13,6 +14,7 @@ function PlayList(): ReactElement {
   const dispatch = useDispatch();
 
   const playlists = useSelector(playlistSelectors.getPlaylists);
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   useEffect(() => {
     dispatch(getPlaylists());
@@ -20,7 +22,11 @@ function PlayList(): ReactElement {
 
   return (
     <>
-      <div className="d-flex flex-column bg-body-tertiary rounded-2  p-2 m-2">
+      <div
+        className={`d-flex flex-column rounded-2 p-2 m-2 ${
+          isDarkMode ? "bg-dark , text-white" : "bg-body-tertiary"
+        }`}
+      >
         <div className="d-flex justify-content-between m-1">
           <h4>Playlists</h4>
           {showAddPlaylist === false ? (

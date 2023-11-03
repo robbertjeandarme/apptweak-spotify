@@ -177,9 +177,6 @@ function* editPlaylistSaga(action: any) {
       playlistSelectors.selectPlaylist
     );
 
-    console.log("editPlaylistSaga action.payload");
-    console.log(action.payload);
-
     const request = () => {
       return axios.put(
         `https://api.spotify.com/v1/playlists/${selectedPlaylist.id}`,
@@ -195,9 +192,6 @@ function* editPlaylistSaga(action: any) {
         }
       );
     };
-
-    // object maken voor terug te geven aan de slice
-    console.log("beforre request");
 
     // data komt leeg terug
     let { data } = yield call(request);

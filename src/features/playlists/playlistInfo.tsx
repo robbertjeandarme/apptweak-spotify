@@ -6,11 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import EditPlaylist from "./editPlaylist";
 import { authSelectors } from "../../containers/auth/selectors";
+import { preferencesSelectors } from "../../containers/preferences/selectors";
 
 function PlaylistInfo(): ReactElement {
+  const [showEditPlaylist, setShowEditPlaylist] = useState(false);
+
   const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
   const user = useSelector(authSelectors.getUser);
-  const [showEditPlaylist, setShowEditPlaylist] = useState(false);
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   const validteCorrectOwner = () => {
     if (selectedPlaylist?.owner.id === user?.userId) {
@@ -21,7 +24,12 @@ function PlaylistInfo(): ReactElement {
 
   return (
     <>
-      <div className="bg-body-tertiary rounded-2 p-1 m-2 d-flex justify-content-between">
+      <div
+        className={`rounded-2 p-1 m-2 d-flex justify-content-between ${
+          isDarkMode ? "bg-dark text-white" : "bg-body-tertiary"
+        }`}
+      >
+        {" "}
         {selectedPlaylist === undefined && (
           <h4 className="text-center">Select a playlist</h4>
         )}
@@ -29,7 +37,6 @@ function PlaylistInfo(): ReactElement {
           <h4>{selectedPlaylist?.name}</h4>
           <h6 className="opacity-75">{selectedPlaylist?.description}</h6>
         </div>
-
         <div className="justify-content-center d-flex">
           {selectedPlaylist && validteCorrectOwner() && (
             <button

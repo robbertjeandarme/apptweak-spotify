@@ -1,12 +1,12 @@
 import { FC, ReactElement, useState } from "react";
 import { Navbar, Container, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { preferencesSelectors } from "../containers/preferences/selectors";
+import { toggleDarkmode } from "../containers/preferences/slice";
 
 function Header(): ReactElement {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   return (
     <Navbar className={isDarkMode ? "bg-dark" : "bg-body-tertiary"}>
@@ -14,7 +14,7 @@ function Header(): ReactElement {
         <Navbar.Brand href="#home">Spotify</Navbar.Brand>
         <Button
           className={isDarkMode ? "btn btn-light" : "btn btn-dark"}
-          onClick={toggleDarkMode}
+          onClick={() => dispatch(toggleDarkmode())}
         >
           {isDarkMode ? "Light Mode" : "Dark Mode"}
         </Button>

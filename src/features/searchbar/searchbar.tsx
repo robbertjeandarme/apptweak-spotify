@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import SearchbarTrack from "./searchbarTrack";
 import { Track } from "../../types/track";
+import { preferencesSelectors } from "../../containers/preferences/selectors";
 
 function Searchbar(): ReactElement {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -14,6 +15,7 @@ function Searchbar(): ReactElement {
   const accessToken = useSelector(
     (state: RootState) => state.authentication.accessToken
   );
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   const onSearch = async () => {
     tracks.length = 0; //clear the array
@@ -61,9 +63,11 @@ function Searchbar(): ReactElement {
           >
             <Form.Control
               type="search"
+              className={`me-2 rounded-pill  ${
+                isDarkMode ? "bg-dark text-white dark-placeholder" : ""
+              }`}
               onChange={handleSearchInputChange}
               placeholder="Search"
-              className="me-2 rounded-pill"
               aria-label="Search"
             />
             <Button

@@ -164,10 +164,6 @@ const playlistSlice = createSlice({
         state.status = RequestStatus.PENDING;
       })
       .addCase(editPlaylistSuccess, (state, action) => {
-        console.log("editPlaylistSuccess action.payload ");
-        console.log("nicca");
-
-        console.log(action);
         state.status = RequestStatus.SUCCESS;
         state.playlists = state.playlists.map((playlist) =>
           playlist.id === action.payload.id ? action.payload : playlist

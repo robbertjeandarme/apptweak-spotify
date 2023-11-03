@@ -4,12 +4,14 @@ import addPlaylist from "./addPlaylist";
 import { useDispatch, useSelector } from "react-redux";
 import { editPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
+import { preferencesSelectors } from "../../containers/preferences/selectors";
 
 function EditPlaylist(): ReactElement {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   const dispatch = useDispatch();
 
@@ -25,9 +27,17 @@ function EditPlaylist(): ReactElement {
 
   return (
     <>
-      <Form className="m-2 bg-body-tertiary rounded-3" onSubmit={handleSubmit}>
+      <Form
+        className={`m-2 rounded-3 ${
+          isDarkMode ? "bg-dark text-white" : "bg-body-tertiary"
+        }`}
+        onSubmit={handleSubmit}
+      >
         <Form.Group controlId="formName" className="my-2">
           <Form.Control
+            className={`${
+              isDarkMode ? "bg-dark text-white dark-placeholder" : ""
+            }`}
             type="text"
             placeholder="Enter new name"
             value={name}
@@ -38,6 +48,9 @@ function EditPlaylist(): ReactElement {
         <Form.Group className="my-2" controlId="formDescription">
           <Form.Control
             as="textarea"
+            className={`${
+              isDarkMode ? "bg-dark text-white dark-placeholder" : ""
+            }`}
             rows={3}
             placeholder="Enter new description"
             value={description}

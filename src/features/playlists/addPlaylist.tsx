@@ -1,8 +1,9 @@
 import { ReactElement, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPlaylist } from "../../containers/playlist/slice";
 import { toast } from "react-toastify";
+import { preferencesSelectors } from "../../containers/preferences/selectors";
 interface AddPlaylistProps {
   onClose: () => void;
 }
@@ -12,10 +13,12 @@ interface AddPlaylistProps {
 function AddPlaylist({ onClose }: AddPlaylistProps): ReactElement {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const notify = () => toast.error("Please enter a name!");
+
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   const dispatch = useDispatch();
 
+  const notify = () => toast.error("Please enter a name!");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -33,6 +36,9 @@ function AddPlaylist({ onClose }: AddPlaylistProps): ReactElement {
       <Form.Group controlId="formName" className="my-2">
         <Form.Control
           type="text"
+          className={`${
+            isDarkMode ? "bg-dark text-white dark-placeholder" : ""
+          }`}
           placeholder="Enter name"
           value={name}
           onChange={(event) => setName(event.target.value)}
@@ -42,6 +48,9 @@ function AddPlaylist({ onClose }: AddPlaylistProps): ReactElement {
       <Form.Group className="my-2" controlId="formDescription">
         <Form.Control
           as="textarea"
+          className={`${
+            isDarkMode ? "bg-dark text-white dark-placeholder" : ""
+          }`}
           rows={3}
           placeholder="Enter description"
           value={description}

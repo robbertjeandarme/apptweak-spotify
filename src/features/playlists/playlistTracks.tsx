@@ -10,14 +10,16 @@ import {
   deleteTrackFromPlaylist,
   selectedPlaylist,
 } from "../../containers/playlist/slice";
+import { preferencesSelectors } from "../../containers/preferences/selectors";
 
 function PlaylistTracks(): ReactElement {
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
   const listOfPlayListTracks = useSelector(playlistSelectors.getPlaylistTracks);
   const selectedPlaylist = useSelector(playlistSelectors.selectPlaylist);
   const accessToken = useSelector(authSelectors.getAccessToken);
   const user = useSelector(authSelectors.getUser);
-
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const isDarkMode = useSelector(preferencesSelectors.getDarkmode);
 
   const dispatch = useDispatch();
 
@@ -55,7 +57,7 @@ function PlaylistTracks(): ReactElement {
           return (
             <Card
               key={track.id}
-              className="shadow"
+              className={`shadow ${isDarkMode ? "bg-dark text-white" : ""}`}
               style={{ width: "12rem", margin: "0.5rem" }}
             >
               <Card.Img
