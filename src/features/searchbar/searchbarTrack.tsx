@@ -21,7 +21,7 @@ function SearchbarTrack(props: SearchbarTrackProps): ReactElement {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center w-50  m-2 square border shadow rounded-3">
+      <div className="d-flex justify-content-between align-items-center w-100  m-2 square border shadow rounded-3">
         <img
           src={track.album.images[0].url}
           alt={track.name}

@@ -82,7 +82,10 @@ function Searchbar(): ReactElement {
         </Col>
       </Row>
       <Row>
-        <Col sm={6} className="d-flex flex-column align-items-center w-100 ">
+        <Col
+          sm={6}
+          className="d-flex flex-column align-items-center mt-4 w-100 "
+        >
           {tracks
             .map((track: Track) => (
               <SearchbarTrack key={track.id} track={track} />
