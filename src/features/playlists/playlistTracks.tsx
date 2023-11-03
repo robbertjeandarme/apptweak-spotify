@@ -11,6 +11,7 @@ import {
   selectedPlaylist,
 } from "../../containers/playlist/slice";
 import { preferencesSelectors } from "../../containers/preferences/selectors";
+import { toast } from "react-toastify";
 
 function PlaylistTracks(): ReactElement {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -49,6 +50,14 @@ function PlaylistTracks(): ReactElement {
       audio.currentTime = 0;
     }
   };
+
+  const handleDeleteClick = (track: Track) => {
+    dispatch(deleteTrackFromPlaylist(track));
+    notify();
+  };
+
+  const notify = () =>
+    toast.success("Track deleted from playlist successfully!");
 
   return (
     <>
@@ -91,7 +100,7 @@ function PlaylistTracks(): ReactElement {
                   {user?.userId === selectedPlaylist?.owner.id && (
                     <button
                       className="btn text-danger"
-                      onClick={() => dispatch(deleteTrackFromPlaylist(track))}
+                      onClick={() => handleDeleteClick(track)}
                     >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </button>

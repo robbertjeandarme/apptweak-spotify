@@ -18,15 +18,14 @@ function AddPlaylist({ onClose }: AddPlaylistProps): ReactElement {
 
   const dispatch = useDispatch();
 
-  const notify = () => toast.error("Please enter a name!");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (name === "") {
-      notify();
+    if (name === "" && description === "") {
+      toast.error("Please enter a name and description!");
       return;
     }
-
+    toast.success("Playlist added successfully!");
     dispatch(addPlaylist({ name, description } as any));
     onClose();
   };

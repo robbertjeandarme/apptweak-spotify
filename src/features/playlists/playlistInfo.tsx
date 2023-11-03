@@ -49,7 +49,9 @@ function PlaylistInfo(): ReactElement {
         </div>
       </div>
 
-      {showEditPlaylist && <EditPlaylist></EditPlaylist>}
+      {showEditPlaylist && (
+        <EditPlaylist onClose={() => setShowEditPlaylist(false)}></EditPlaylist>
+      )}
     </>
   );
 }

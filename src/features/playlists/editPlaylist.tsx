@@ -5,8 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { editPlaylist } from "../../containers/playlist/slice";
 import { playlistSelectors } from "../../containers/playlist/selectors";
 import { preferencesSelectors } from "../../containers/preferences/selectors";
+import { toast } from "react-toastify";
 
-function EditPlaylist(): ReactElement {
+interface EditPlaylistProps {
+  onClose: () => void;
+}
+
+function EditPlaylist({ onClose }: EditPlaylistProps): ReactElement {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -18,11 +23,13 @@ function EditPlaylist(): ReactElement {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (name === "") {
+    if (name === "" && description === "") {
+      toast.error("Please enter a name and description!");
       return;
     }
-
+    toast.success("Playlist edited successfully!");
     dispatch(editPlaylist({ name, description } as any));
+    onClose();
   };
 
   return (
